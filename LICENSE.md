@@ -1,6 +1,6 @@
 # Licenses #
 
-MSPA.upd8r is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License version 3, or any later version, as published by the Free Software Foundation. See [below](#MSPA.upd8r) for details.
+MSPA.upd8r is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License version 3, or any later version, as published by the Free Software Foundation. See [below](#mspaupd8r) for details.
 
 ## [Command Line Parser Utility](https://commandline.codeplex.com) ##
 
