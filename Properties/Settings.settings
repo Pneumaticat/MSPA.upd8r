@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="SavedLatestPage" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">9630</Value>
+      <Value Profile="(Default)">9816</Value>
     </Setting>
   </Settings>
 </SettingsFile>

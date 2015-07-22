@@ -25,7 +25,7 @@ namespace MSPA.upd8r.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("9630")]
+        [global::System.Configuration.DefaultSettingValueAttribute("9816")]
         public int SavedLatestPage {
             get {
                 return ((int)(this["SavedLatestPage"]));
