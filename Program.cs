@@ -102,7 +102,9 @@ namespace MSPA.upd8r
                 filename = "new-page.json";
 
             string json = JsonConvert.SerializeObject(page, Formatting.Indented);
-            File.WriteAllText(filename, json, Encoding.UTF8);
+
+            Encoding utf8NoBOM = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
+            File.WriteAllText(filename, json, utf8NoBOM);
         }
 
         /// <summary>
