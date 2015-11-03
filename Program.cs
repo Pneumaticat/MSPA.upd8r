@@ -17,7 +17,7 @@ namespace MSPA.upd8r
 
         private static bool ExistsAtAddress(string url)
         {
-            WebRequest req = HttpWebRequest.Create(url);
+            WebRequest req = WebRequest.Create(url);
             req.Method = "HEAD";
             WebResponse res = null;
 
@@ -43,7 +43,8 @@ namespace MSPA.upd8r
             int remainingTries = tries;
             while (remainingTries != 0)
             {
-                if (ExistsAtAddress(String.Format("http://www.mspaintadventures.com/6/{0:d6}.txt", number)))
+                if (ExistsAtAddress(string.Format(
+                    "http://www.mspaintadventures.com/6/{0:d6}.txt", number)))
                     return true;
                 else
                 {
@@ -67,7 +68,8 @@ namespace MSPA.upd8r
 
             int savedLatestPage;
             if (File.Exists("savedLatestPage.txt"))
-                savedLatestPage = Convert.ToInt32(File.ReadAllText("savedLatestPage.txt"));
+                savedLatestPage =
+                    Convert.ToInt32(File.ReadAllText("savedLatestPage.txt"));
             else
                 savedLatestPage = 1901;
             int latestPage = UpdateLatestPage(savedLatestPage);
@@ -81,16 +83,21 @@ namespace MSPA.upd8r
                 PageCheckResults results = CheckForNewPage(ref latestPage);
                 if (results.newPageExists)
                 {
-                    // A new page exists. Note that latestPage is now changed to point to the new
-                    // latest page by CheckForNewPage, ensuring that CheckForNewPage on the next
-                    // loop has the right number to check from. (did that make any sense at all?
-                    // hopefully)
-                    Console.WriteLine("[{0}] New page exists! Number: {1}", DateTime.Now, results.page.number);
-                    Console.WriteLine("[{0}] latestPage is now at {1}", DateTime.Now, latestPage);
+                    // A new page exists. Note that latestPage is now changed 
+                    // to point to the new latest page by CheckForNewPage, 
+                    // ensuring that CheckForNewPage on the next loop has the 
+                    // right number to check from. (did that make any sense at 
+                    // all? hopefully)
+                    Console.WriteLine("[{0}] New page exists! Number: {1}",
+                        DateTime.Now, results.page.number);
+                    Console.WriteLine("[{0}] latestPage is now at {1}",
+                        DateTime.Now, latestPage);
                     UpdateNewPageJson(results);
                 }
                 else
-                    Console.WriteLine("[{0}] No new page found. Current latest page is {1}", DateTime.Now, latestPage);
+                    Console.WriteLine(
+                        "[{0}] No new page found. Current latest page is {1}",
+                        DateTime.Now, latestPage);
 
                 Thread.Sleep(10000);
             }
@@ -106,7 +113,7 @@ namespace MSPA.upd8r
 
             string json = JsonConvert.SerializeObject(page, Formatting.Indented);
 
-            Encoding utf8NoBOM = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
+            Encoding utf8NoBOM = new UTF8Encoding(false);
             File.WriteAllText(filename, json, utf8NoBOM);
         }
 
@@ -128,7 +135,8 @@ namespace MSPA.upd8r
                 {
                     try
                     {
-                        pageTxt = client.DownloadString(String.Format("http://www.mspaintadventures.com/6/{0:d6}.txt", number));
+                        pageTxt = client.DownloadString(string.Format(
+                            "http://www.mspaintadventures.com/6/{0:d6}.txt", number));
                         break;
                     }
                     catch
@@ -138,7 +146,8 @@ namespace MSPA.upd8r
                     }
                 }
 
-                string firstLine = new string(pageTxt.TakeWhile(c => c != '\n').ToArray());
+                string firstLine =
+                    new string(pageTxt.TakeWhile(c => c != '\n').ToArray());
 
                 return new PageInformation
                 {
@@ -166,11 +175,22 @@ namespace MSPA.upd8r
         {
             PageCheckResults result;
             if (HSPageExists(latestPage + 1))
-                result = new PageCheckResults { newPageExists = true, page = GetPageInformation(latestPage + 1) };
+                result = new PageCheckResults
+                {
+                    newPageExists = true,
+                    page = GetPageInformation(latestPage + 1)
+                };
             else if (HSPageExists(latestPage + 2))
-                result = new PageCheckResults { newPageExists = true, page = GetPageInformation(latestPage + 2) };
+                result = new PageCheckResults
+                {
+                    newPageExists = true,
+                    page = GetPageInformation(latestPage + 2)
+                };
             else
-                result = new PageCheckResults { newPageExists = false };
+                result = new PageCheckResults
+                {
+                    newPageExists = false
+                };
 
             if (result.newPageExists)
             {
