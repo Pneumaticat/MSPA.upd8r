@@ -14,7 +14,6 @@ namespace MSPA.upd8r
     class Program
     {
         static Options CommandLineOptions = new Options();
-        static Configuration Config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
         private static bool ExistsAtAddress(string url)
         {
@@ -66,7 +65,11 @@ namespace MSPA.upd8r
             Console.WriteLine("Updating latest page marker...");
             Console.WriteLine();
 
-            int savedLatestPage = Convert.ToInt32(Config.AppSettings.Settings["SavedLatestPage"].Value);
+            int savedLatestPage;
+            if (File.Exists("savedLatestPage.txt"))
+                savedLatestPage = Convert.ToInt32(File.ReadAllText("savedLatestPage.txt"));
+            else
+                savedLatestPage = 1901;
             int latestPage = UpdateLatestPage(savedLatestPage);
 
             Console.WriteLine();
@@ -195,9 +198,7 @@ namespace MSPA.upd8r
             Console.WriteLine("Latest page marker is now at {0}", latestPage);
 
             // Save LatestPage to file to be read upon startup next time
-            Config.AppSettings.Settings["SavedLatestPage"].Value = latestPage.ToString();
-            Config.Save();
-            ConfigurationManager.RefreshSection("appSettings");
+            File.WriteAllText("savedLatestPage.txt", latestPage.ToString());
 
             return latestPage;
         }
